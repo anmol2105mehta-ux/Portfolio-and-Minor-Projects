@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Signal Simulator</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        body { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background: #121212; color: #fff; }
+        .traffic-housing { background: #222; border: 4px solid #111; padding: 30px 25px; border-radius: 40px; box-shadow: 0 0 30px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.5); display: flex; flex-direction: column; gap: 20px; }
+        .lens { width: 90px; height: 90px; border-radius: 50%; background: #333; border: 4px solid #1a1a1a; position: relative; transition: all 0.3s ease; box-shadow: inset 0 0 10px rgba(0,0,0,0.8); }
+        /* Glow Classes */
+        .red-active { background: #ff2a2a; box-shadow: 0 0 40px #ff2a2a, inset 0 0 10px #ff0000; }
+        .yellow-active { background: #ffcc00; box-shadow: 0 0 40px #ffcc00, inset 0 0 10px #e6b800; }
+        .green-active { background: #00ff00; box-shadow: 0 0 40px #00ff00, inset 0 0 10px #00cc00; }
+        .status { margin-top: 40px; font-size: 32px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
+    </style>
+</head>
+<body>
+    <div class="traffic-housing">
+        <div class="lens" id="red"></div>
+        <div class="lens" id="yellow"></div>
+        <div class="lens" id="green"></div>
+    </div>
+    <div class="status" id="statusText">System Boot...</div>
+
+    <script>
+        const r = document.getElementById('red'), y = document.getElementById('yellow'), g = document.getElementById('green'), txt = document.getElementById('statusText');
+        function reset() { r.className = 'lens'; y.className = 'lens'; g.className = 'lens'; }
+        
+        function runSignal() {
+            setTimeout(() => { reset(); r.classList.add('red-active'); txt.innerText = "STOP"; txt.style.color = "#ff2a2a"; }, 0);
+            setTimeout(() => { reset(); g.classList.add('green-active'); txt.innerText = "GO"; txt.style.color = "#00ff00"; }, 4000);
+            setTimeout(() => { reset(); y.classList.add('yellow-active'); txt.innerText = "SLOW"; txt.style.color = "#ffcc00"; }, 8000);
+        }
+        runSignal(); setInterval(runSignal, 11000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet | Expense Tracker</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: #f8fafc; display: flex; justify-content: center; padding: 50px 20px; }
+        .container { width: 100%; max-width: 450px; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .header h2 { font-size: 20px; color: #1e293b; }
+        .total-box { background: linear-gradient(135deg, #3b82f6, #8b5cf6); padding: 20px; border-radius: 16px; color: white; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3); }
+        .total-box p { font-size: 14px; opacity: 0.9; margin-bottom: 5px; }
+        .total-box h1 { font-size: 36px; font-weight: 800; }
+        .controls { display: flex; gap: 10px; margin-bottom: 20px; }
+        input { flex: 1; padding: 12px; border: 1px solid #e2e8f0; border-radius: 10px; outline: none; transition: 0.3s; }
+        input:focus { border-color: #3b82f6; }
+        button { background: #0f172a; color: white; border: none; padding: 0 20px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #334155; }
+        .history h3 { font-size: 16px; color: #64748b; margin-bottom: 15px; }
+        .list { display: flex; flex-direction: column; gap: 10px; }
+        .item { display: flex; justify-content: space-between; padding: 15px; background: #f1f5f9; border-radius: 10px; font-weight: 600; color: #334155; }
+        .item .amount { color: #ef4444; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header"><h2>Wallet App</h2></div>
+        <div class="total-box"><p>Total Spent</p><h1>$<span id="totalDisplay">0.00</span></h1></div>
+        
+        <div class="controls">
+            <input type="text" id="desc" placeholder="E.g. Coffee">
+            <input type="number" id="amt" placeholder="$0.00" style="max-width: 100px;">
+            <button onclick="addExp()">+</button>
+        </div>
+        
+        <div class="history">
+            <h3>Recent Transactions</h3>
+            <div class="list" id="expList"></div>
+        </div>
+    </div>
+    <script>
+        let total = 0;
+        function addExp() {
+            const desc = document.getElementById('desc'), amt = document.getElementById('amt');
+            const val = parseFloat(amt.value);
+            if (!desc.value || isNaN(val) || val <= 0) return;
+            
+            const div = document.createElement('div');
+            div.className = 'item';
+            div.innerHTML = `<span>${desc.value}</span> <span class="amount">-$${val.toFixed(2)}</span>`;
+            
+            document.getElementById('expList').prepend(div);
+            total += val;
+            document.getElementById('totalDisplay').innerText = total.toFixed(2);
+            desc.value = ''; amt.value = '';
+        }
+    </script>
+</body>
+</html>

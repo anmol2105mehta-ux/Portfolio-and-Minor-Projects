@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Multi-Currency Converter</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        
+        body { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); 
+            min-height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 20px; 
+        }
+        
+        .converter-card { 
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%; 
+            max-width: 440px; 
+            padding: 35px 30px; 
+            border-radius: 24px; 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            color: white;
+        }
+        
+        h2 { 
+            font-size: 24px; 
+            font-weight: 800; 
+            margin-bottom: 5px; 
+            background: linear-gradient(to right, #38bdf8, #818cf8); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+        
+        .subtitle { color: #94a3b8; font-size: 14px; margin-bottom: 30px; }
+        
+        .input-box { 
+            background: rgba(15, 23, 42, 0.6); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 16px; 
+            padding: 16px; 
+            margin-bottom: 12px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 8px;
+            transition: 0.3s;
+        }
+        
+        .input-box:focus-within { border-color: #6366f1; box-shadow: 0 0 15px rgba(99, 102, 241, 0.2); }
+        
+        .label { font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+        
+        .row { display: flex; align-items: center; justify-content: space-between; }
+        
+        select { 
+            background: rgba(255, 255, 255, 0.05); 
+            color: white; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            padding: 8px 12px; 
+            border-radius: 10px; 
+            font-size: 16px; 
+            font-weight: 700; 
+            outline: none; 
+            cursor: pointer; 
+        }
+        
+        select option { background: #0f172a; color: white; }
+        
+        input { 
+            background: transparent; 
+            border: none; 
+            outline: none; 
+            color: white; 
+            font-size: 24px; 
+            font-weight: 700; 
+            text-align: right; 
+            width: 60%; 
+        }
+        
+        /* Disable arrows on number input */
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        
+        .swap-container { display: flex; justify-content: center; margin: -6px 0 6px 0; position: relative; z-index: 5; }
+        
+        .swap-btn { 
+            background: #6366f1; 
+            border: 4px solid #111428; 
+            color: white; 
+            width: 40px; 
+            height: 40px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
+            font-size: 18px; 
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+        
+        .swap-btn:hover { transform: rotate(180deg) scale(1.1); background: #4f46e5; }
+        
+        .rate-info { 
+            text-align: center; 
+            margin-top: 25px; 
+            font-size: 14px; 
+            color: #94a3b8; 
+            background: rgba(255, 255, 255, 0.02); 
+            padding: 12px; 
+            border-radius: 12px; 
+            border: 1px dashed rgba(255,255,255,0.05); 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="converter-card">
+        <h2>Global Exchange</h2>
+        <p class="subtitle">Multi-currency instant converter</p>
+        
+        <!-- From Currency Box -->
+        <div class="input-box">
+            <span class="label">You Send</span>
+            <div class="row">
+                <select id="fromCurrency" onchange="convert()">
+                    <option value="USD">🇺🇸 USD</option>
+                    <option value="EUR">🇪🇺 EUR</option>
+                    <option value="GBP">🇬🇧 GBP</option>
+                    <option value="INR" selected>🇮🇳 INR</option>
+                    <option value="JPY">🇯🇵 JPY</option>
+                    <option value="AUD">🇦🇺 AUD</option>
+                    <option value="CAD">🇨🇦 CAD</option>
+                    <option value="AED">🇦🇪 AED</option>
+                    <option value="CNY">🇨🇳 CNY</option>
+                    <option value="SGD">🇸🇬 SGD</option>
+                </select>
+                <input type="number" id="amountInput" value="1000" oninput="convert()">
+            </div>
+        </div>
+        
+        <!-- Swap Button -->
+        <div class="swap-container">
+            <div class="swap-btn" onclick="swapCurrencies()">⇄</div>
+        </div>
+        
+        <!-- To Currency Box -->
+        <div class="input-box">
+            <span class="label">You Receive</span>
+            <div class="row">
+                <select id="toCurrency" onchange="convert()">
+                    <option value="USD" selected>🇺🇸 USD</option>
+                    <option value="EUR">🇪🇺 EUR</option>
+                    <option value="GBP">🇬🇧 GBP</option>
+                    <option value="INR">🇮🇳 INR</option>
+                    <option value="JPY">🇯🇵 JPY</option>
+                    <option value="AUD">🇦🇺 AUD</option>
+                    <option value="CAD">🇨🇦 CAD</option>
+                    <option value="AED">🇦🇪 AED</option>
+                    <option value="CNY">🇨🇳 CNY</option>
+                    <option value="SGD">🇸🇬 SGD</option>
+                </select>
+                <input type="text" id="resultInput" readonly value="0.00">
+            </div>
+        </div>
+        
+        <!-- Exchange rate breakdown banner -->
+        <div class="rate-info" id="rateBanner">Loading live calculations...</div>
+    </div>
+
+    <script>
+        // Exchange conversion dictionary anchored to baseline reference (1 USD)
+        const exchangeRates = {
+            USD: 1.00,
+            EUR: 0.92,
+            GBP: 0.78,
+            INR: 83.50,
+            JPY: 160.85,
+            AUD: 1.49,
+            CAD: 1.36,
+            AED: 3.67,
+            CNY: 7.27,
+            SGD: 1.35
+        };
+
+        function convert() {
+            const amount = parseFloat(document.getElementById('amountInput').value);
+            const from = document.getElementById('fromCurrency').value;
+            const to = document.getElementById('toCurrency').value;
+            
+            const resultInput = document.getElementById('resultInput');
+            const rateBanner = document.getElementById('rateBanner');
+            
+            if (isNaN(amount) || amount <= 0) {
+                resultInput.value = "0.00";
+                rateBanner.innerText = "Please enter a valid transfer sum";
+                return;
+            }
+            
+            // Standardize intermediate conversion value back to USD base rate, then map to final asset tier
+            const amountInUSD = amount / exchangeRates[from];
+            const convertedAmount = amountInUSD * exchangeRates[to];
+            
+            // Calculate specific 1-to-1 conversion rate for the description text box
+            const structuralBase = (1 / exchangeRates[from]) * exchangeRates[to];
+            
+            // Render outputs cleanly
+            resultInput.value = convertedAmount.toFixed(2);
+            rateBanner.innerText = `1 ${from} = ${structuralBase.toFixed(4)} ${to}`;
+        }
+
+        function swapCurrencies() {
+            const fromSelect = document.getElementById('fromCurrency');
+            const toSelect = document.getElementById('toCurrency');
+            
+            const tempValue = fromSelect.value;
+            fromSelect.value = toSelect.value;
+            toSelect.value = tempValue;
+            
+            convert();
+        }
+
+        // Initialize execution metrics seamlessly when app renders onto screen context
+        window.onload = convert;
+    </script>
+
+</body>
+</html>

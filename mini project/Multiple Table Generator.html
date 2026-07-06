@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplication Table Generator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        
+        body { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            min-height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 20px; 
+            color: #fff; 
+        }
+        
+        .container { 
+            background: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(20px); 
+            width: 100%; 
+            max-width: 600px; 
+            padding: 40px; 
+            border-radius: 24px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2); 
+            border: 1px solid rgba(255,255,255,0.2); 
+            text-align: center; 
+        }
+        
+        h2 { 
+            font-size: 32px; 
+            margin-bottom: 30px; 
+            font-weight: 900; 
+            text-shadow: 0 4px 10px rgba(0,0,0,0.2); 
+        }
+        
+        .controls { 
+            display: flex; 
+            gap: 15px; 
+            margin-bottom: 40px; 
+            justify-content: center; 
+        }
+        
+        input { 
+            width: 220px; 
+            padding: 15px; 
+            border: 2px solid rgba(255,255,255,0.3); 
+            border-radius: 12px; 
+            font-size: 18px; 
+            outline: none; 
+            background: rgba(0,0,0,0.1); 
+            color: #fff; 
+            text-align: center; 
+            transition: 0.3s; 
+        }
+        
+        input::placeholder { color: rgba(255,255,255,0.6); }
+        input:focus { border-color: #fff; background: rgba(0,0,0,0.2); }
+        
+        button { 
+            background: #fff; 
+            color: #764ba2; 
+            border: none; 
+            padding: 0 30px; 
+            border-radius: 12px; 
+            font-size: 18px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            box-shadow: 0 4px 15px rgba(255,255,255,0.2); 
+        }
+        
+        button:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 25px rgba(255,255,255,0.4); 
+        }
+        
+        /* Grid Layout for the exactly 10 items */
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(5, 1fr); 
+            gap: 15px; 
+        }
+        
+        .cell { 
+            background: rgba(255,255,255,0.15); 
+            border: 1px solid rgba(255,255,255,0.2); 
+            padding: 20px 10px; 
+            border-radius: 16px; 
+            font-size: 16px; 
+            font-weight: 700; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+            opacity: 0; 
+            transform: translateY(20px); 
+            animation: slideUp 0.4s ease forwards; 
+            transition: transform 0.2s, background 0.2s; 
+        }
+        
+        .cell:hover { 
+            background: rgba(255,255,255,0.3); 
+            transform: translateY(-5px) scale(1.05) !important; 
+        }
+        
+        .cell span { 
+            display: block; 
+            font-size: 26px; 
+            color: #fff; 
+            margin-top: 5px; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2); 
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 550px) {
+            .grid { grid-template-columns: repeat(2, 1fr); }
+            .controls { flex-direction: column; }
+            input, button { width: 100%; padding: 15px; }
+        }
+        
+        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>✖️ Table Generator (Up to 10)</h2>
+        <div class="controls">
+            <input type="number" id="baseNumber" placeholder="Enter a base number">
+            <button onclick="generateTable()">Generate</button>
+        </div>
+        <div class="grid" id="gridContainer"></div>
+    </div>
+
+    <script>
+        function generateTable() {
+            const base = parseInt(document.getElementById('baseNumber').value);
+            const grid = document.getElementById('gridContainer');
+            
+            // Clear previous results
+            grid.innerHTML = '';
+            
+            // Validate input
+            if(isNaN(base)) {
+                alert("Please enter a valid number!");
+                return;
+            }
+            
+            // Strictly loop exactly 10 times
+            for(let i = 1; i <= 10; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                
+                // Stagger the animation delay so they pop in one after another
+                cell.style.animationDelay = `${i * 0.05}s`;
+                
+                // Set the math content
+                cell.innerHTML = `${base} × ${i} <span>${base * i}</span>`;
+                
+                grid.appendChild(cell);
+            }
+        }
+    </script>
+
+</body>
+</html>

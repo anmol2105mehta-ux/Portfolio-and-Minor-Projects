@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anmol Mehta | Portfolio</title>
+    <link rel="stylesheet" href="port.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Advanced Theme Configurator Widget -->
+    <div class="theme-configurator">
+        <button id="theme-config-btn" aria-label="Toggle Theme Configurator">
+            <i class="fas fa-palette"></i>
+        </button>
+        <div class="theme-menu" id="theme-menu">
+            <h4>Select Accent</h4>
+            <div class="color-options">
+                <!-- Preset High-Contrast Dots -->
+                <span class="color-dot active" data-color="#ff5500" style="background-color: #ff5500;"></span>
+                <span class="color-dot" data-color="#00d2ff" style="background-color: #00d2ff;"></span>
+                <span class="color-dot" data-color="#00ff66" style="background-color: #00ff66;"></span>
+                <span class="color-dot" data-color="#bd00ff" style="background-color: #bd00ff;"></span>
+                
+                <!-- Infinite Custom Color Picker Button Container -->
+                <label class="custom-color-picker-wrapper" title="Choose any custom color">
+                    <i class="fas fa-plus"></i>
+                    <input type="color" id="universal-color-picker" value="#ff5500">
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header / Navbar Layout -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Anmol<span class="theme-accent">Mehta</span></div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=anmol2105mehta@gmail.com&su=Job%20Opportunity" target="_blank" class="btn-download">Hire Me</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="home" class="hero-section">
+        <div class="container hero-content">
+            <span class="subtitle theme-accent-text">Welcome to my Portfolio</span>
+            <h1>Hi, I'm <span class="theme-accent">Anmol Mehta</span></h1>
+            <p class="tagline">I am a <span id="typing-text"></span></p>
+            <p class="hero-desc">Motivated 2nd-year CSE student combining a multidisciplinary hardware-software background in Mechatronics with strong C++ and DSA fundamentals.</p>
+            <div class="hero-buttons">
+                <a href="#contact" class="btn-primary">Get In Touch</a>
+                <a href="#projects" class="btn-secondary">View Work</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">About <span class="theme-accent">Me</span></h2>
+            <div class="about-card">
+                <p>Motivated 2nd-year CSE (LEET) student with a prior Diploma in Mechatronics Engineering, combining a multidisciplinary hardware-software background with strong C++ and DSA fundamentals. Actively exploring Django web development, AI/ML for future master's studies.</p>
+                
+                <div class="timeline-container">
+                    <div class="timeline-box">
+                        <span class="year theme-accent-text">2025 - Now</span>
+                        <h3>B.Tech in Computer Science and Engineering</h3>
+                        <h4>CGC University</h4>
+                        <p>Pursuing with a focus on core programming, data structures, algorithms, and problem-solving.</p>
+                    </div>
+                    <div class="timeline-box">
+                        <span class="year theme-accent-text">2024 - 2025</span>
+                        <h3>Project Leader</h3>
+                        <h4>Central Tool Room (MSME)</h4>
+                        <p>Planned work, divided tasks among team members, kept schedules, and solved technical issues.</p>
+                    </div>
+                    <div class="timeline-box">
+                        <span class="year theme-accent-text">2022 - 2025</span>
+                        <h3>Diploma in Engineering - Mechatronics</h3>
+                        <h4>Central Tool Room (MSME)</h4>
+                        <p>Built a hardware-software understanding across mechanical systems, electronics, and basic automation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section bg-alt">
+        <div class="container">
+            <h2 class="section-title">My <span class="theme-accent">Skills</span></h2>
+            <div class="skills-grid">
+                <div class="skills-category">
+                    <h3>Technical Expertise</h3>
+                    <div class="tag-group">
+                        <span class="skill-tag"><i class="fab fa-java theme-accent-text"></i> Java Developer</span>
+                        <span class="skill-tag"><i class="fab fa-python theme-accent-text"></i> Python</span>
+                        <span class="skill-tag"><i class="fas fa-code theme-accent-text"></i> Web Developer</span>
+                        <span class="skill-tag"><i class="fas fa-terminal theme-accent-text"></i> C/C++</span>
+                        <span class="skill-tag"><i class="fas fa-cubes theme-accent-text"></i> Numpy/Django</span>
+                        <span class="skill-tag"><i class="fas fa-robot theme-accent-text"></i> Robotics</span>
+                    </div>
+                </div>
+                <div class="skills-category">
+                    <h3>Professional Strengths</h3>
+                    <div class="tag-group">
+                        <span class="skill-tag alt"><i class="fas fa-users-cog theme-accent-text"></i> Leadership</span>
+                        <span class="skill-tag alt"><i class="fas fa-hands-helping theme-accent-text"></i> Collaboration</span>
+                        <span class="skill-tag alt"><i class="fas fa-comments theme-accent-text"></i> Communication</span>
+                        <span class="skill-tag alt"><i class="fas fa-lightbulb theme-accent-text"></i> Innovation</span>
+                        <span class="skill-tag alt"><i class="fas fa-users theme-accent-text"></i> Teamwork</span>
+                        <span class="skill-tag alt"><i class="fas fa-puzzle-piece theme-accent-text"></i> Problem Solving</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+        <div class="container">
+            <h2 class="section-title">My <span class="theme-accent">Projects</span></h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>ATM Machine</h3>
+                    <p>Interactive web application simulating core automated banking terminal operations.</p>
+                    <a href="mini project/ATM Machine.html" target="_blank">Launch App <i class="fas fa-external-link-alt"></i></a>
+                </div>
+                <div class="project-card">
+                    <h3>Website Clone</h3>
+                    <p>A responsive UI cloning exercise matching exact layout structural specifications.</p>
+                    <a href="mini project/clone_website.html" target="_blank">Launch App <i class="fas fa-external-link-alt"></i></a>
+                </div>
+                <div class="project-card">
+                    <h3>Cricket Ground Boundary</h3>
+                    <p>Graphical bounding grid application tracking interactive coordinates and configurations.</p>
+                    <a href="mini project/Cricket Ground Boundary.html" target="_blank">Launch App <i class="fas fa-external-link-alt"></i></a>
+                </div>
+                <div class="project-card">
+                    <h3>Currency Converter</h3>
+                    <p>A functional calculator resolving exchange rates dynamically across numeric user entries.</p>
+                    <a href="mini project/Currency Convertor.html" target="_blank">Launch App <i class="fas fa-external-link-alt"></i></a>
+                </div>
+                <div class="project-card">
+                    <h3>Digital Clock</h3>
+                    <p>Time widget displaying clean, real-time dynamic intervals directly on screen.</p>
+                    <a href="mini project/Digital Clock.html" target="_blank">Launch App <i class="fas fa-external-link-alt"></i></a>
+                </div>
+                <div class="project-card">
+                    <h3>Expense Tracker</h3>
+                    <p>Financial ledger utility keeping records, cost sums, and history arrays active.</p>
+                    <a href="mini project/Expense Tracker.html" target="_blank">Launch App <i class="fas fa-external-link-alt"></i></a>
+                </div>
+                <div class="project-card">
+                    <h3>Multiple Table Generator</h3>
+                    <p>Mathematical utility looping clean loop metrics dynamically on user choice controls.</p>
+                    <a href="mini project/Multiple Table Generator.html" target="_blank">Launch App <i class="fas fa-external-link-alt"></i></a>
+                </div>
+                <div class="project-card">
+                    <h3>Paper Scissors Game</h3>
+                    <p>Classic game application implementing conditional logic and randomized opponent cycles.</p>
+                    <a href="mini project/Paper_Scissors.html" target="_blank">Launch App <i class="fas fa-external-link-alt"></i></a>
+                </div>
+                <div class="project-card">
+                    <h3>QR Code Generator</h3>
+                    <p>Dynamic data tool converting textual strings instantly into scanning matrix layouts.</p>
+                    <a href="mini project/QR Code Generator.html" target="_blank">Launch App <i class="fas fa-external-link-alt"></i></a>
+                </div>
+                <div class="project-card">
+                    <h3>To-Do List</h3>
+                    <p>Task tracker logic featuring generation, status modifiers, and element removal triggers.</p>
+                    <a href="mini project/to-list.html" target="_blank">Launch App <i class="fas fa-external-link-alt"></i></a>
+                </div>
+                <div class="project-card">
+                    <h3>Traffic Signal</h3>
+                    <p>Automation loop simulating timed lighting adjustments mimicking micro-controllers.</p>
+                    <a href="mini project/Traffic Signal.html" target="_blank">Launch App <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section matching Screenshot 2026-07-04 151740.png -->
+    <section id="contact" class="section bg-alt contact-section">
+        <div class="container">
+            <h2 class="section-title">Contact <span class="theme-accent">Me</span></h2>
+            <form class="contact-form">
+                <div class="form-row">
+                    <div class="form-col text-inputs-col">
+                        <input type="text" placeholder="Full Name" required>
+                        <input type="email" placeholder="Email" required>
+                        <input type="tel" placeholder="Phone Number" required>
+                        <input type="text" placeholder="Subject" required>
+                    </div>
+                    <div class="form-col message-textarea-col">
+                        <textarea placeholder="Your Message" required></textarea>
+                    </div>
+                </div>
+                <div class="form-submit-row">
+                    <button type="submit" class="btn-submit">Send Message</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2026 Anmol Mehta. All Rights Reserved.</p>
+            <div class="contact-meta">
+                <span><i class="fas fa-map-marker-alt theme-accent-text"></i> Ludhiana, India</span>
+                <span><i class="fas fa-phone theme-accent-text"></i> 76588-74794</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="port.js"></script>
+</body>
+</html>

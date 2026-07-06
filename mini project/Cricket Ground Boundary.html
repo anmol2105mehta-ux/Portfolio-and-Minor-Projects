@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Cricket Ground & Boundary Calculator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { min-height: 100vh; background: #0f172a; color: #f8fafc; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; }
+        
+        .dashboard { display: flex; flex-wrap: wrap; gap: 40px; max-width: 1000px; width: 100%; justify-content: center; align-items: flex-start; }
+        
+        /* Calculator Panel */
+        .calc-card { background: #1e293b; width: 100%; max-width: 350px; border-radius: 16px; padding: 30px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); border: 1px solid #334155; }
+        .calc-card h2 { color: #38bdf8; font-size: 22px; margin-bottom: 5px; }
+        .calc-card p { color: #94a3b8; font-size: 14px; margin-bottom: 25px; }
+        label { display: block; margin-bottom: 8px; color: #cbd5e1; font-weight: 600; font-size: 14px; }
+        input { width: 100%; padding: 12px; border: 2px solid #475569; border-radius: 8px; background: #0f172a; color: white; font-size: 16px; outline: none; transition: 0.3s; margin-bottom: 20px; }
+        input:focus { border-color: #38bdf8; }
+        button { width: 100%; background: #38bdf8; color: #0f172a; border: none; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #0284c7; color: white; }
+        
+        .stats { margin-top: 25px; display: flex; flex-direction: column; gap: 12px; }
+        .stat-box { background: #0f172a; padding: 15px; border-radius: 8px; border-left: 4px solid #38bdf8; }
+        .stat-label { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
+        .stat-value { font-size: 18px; font-weight: 700; color: #f8fafc; margin-top: 4px; }
+
+        /* Stadium Visuals */
+        .stadium-wrapper { position: relative; width: 100%; max-width: 450px; display: flex; flex-direction: column; align-items: center; }
+        .stadium { width: 100%; aspect-ratio: 1; background: radial-gradient(circle, #2e8b57 20%, #1e613b 100%); border-radius: 50%; position: relative; box-shadow: inset 0 0 30px rgba(0,0,0,0.6), 0 15px 35px rgba(0,0,0,0.5); border: 4px solid #4ade80; overflow: hidden; transition: 0.5s ease; }
+        .boundary-rope { position: absolute; top: 3%; left: 3%; right: 3%; bottom: 3%; border: 2px dashed rgba(255, 255, 255, 0.8); border-radius: 50%; }
+        
+        /* Pitch & Crease */
+        .pitch { width: 12%; height: 35%; background: #d2b48c; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 2px; box-shadow: inset 0 0 10px rgba(0,0,0,0.2); }
+        .crease-top, .crease-bottom { position: absolute; width: 80%; height: 1px; background: white; left: 10%; }
+        .crease-top { top: 15%; }
+        .crease-bottom { bottom: 15%; }
+
+        /* Players (Dots) */
+        .player { position: absolute; width: 14px; height: 14px; border-radius: 50%; transform: translate(-50%, -50%); cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.5); z-index: 10; transition: transform 0.2s; }
+        .player:hover { transform: translate(-50%, -50%) scale(1.5); z-index: 20; }
+        
+        /* Player Teams/Colors */
+        .team-field { background: #3b82f6; border: 2px solid #eff6ff; } /* Blue Fielders */
+        .team-bat { background: #facc15; border: 2px solid #fff; } /* Yellow Batsmen */
+        .umpire { background: #111827; border: 2px solid #fff; } /* Black/White Umpires */
+
+        /* Player Tooltips */
+        .player::after {
+            content: attr(data-role); position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9); color: white; padding: 4px 8px; border-radius: 4px;
+            font-size: 11px; font-weight: 600; white-space: nowrap; opacity: 0; pointer-events: none; transition: 0.2s;
+        }
+        .player:hover::after { opacity: 1; }
+
+        /* Player Positions (Approximate % coordinates) */
+        .wk { top: 78%; left: 50%; }
+        .bowler { top: 22%; left: 50%; }
+        .bat-strike { top: 66%; left: 50%; }
+        .bat-nonstrike { top: 34%; left: 45%; }
+        .slip { top: 74%; left: 44%; }
+        .point { top: 55%; left: 20%; }
+        .cover { top: 35%; left: 25%; }
+        .midoff { top: 25%; left: 42%; }
+        .midon { top: 25%; left: 58%; }
+        .midwicket { top: 45%; left: 75%; }
+        .squareleg { top: 65%; left: 75%; }
+        .thirdman { top: 88%; left: 25%; }
+        .fineleg { top: 88%; left: 70%; }
+        .ump-main { top: 82%; left: 50%; }
+        .ump-square { top: 65%; left: 88%; }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+        <!-- Input & Results Card -->
+        <div class="calc-card">
+            <h2>🏏 Cricket Dashboard</h2>
+            <p>Calculate bounds & view fielding setup</p>
+            
+            <label>Ground Radius (Meters)</label>
+            <input type="number" id="radius" placeholder="e.g. 75" value="75">
+            <button onclick="calculateGround()">Analyze Ground</button>
+            
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-label">Total Playing Area</div>
+                    <div class="stat-value"><span id="areaRes">17671.46</span> m²</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Boundary Rope Length</div>
+                    <div class="stat-value"><span id="periRes">471.24</span> m</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Visual Ground -->
+        <div class="stadium-wrapper">
+            <div class="stadium" id="stadiumVisual">
+                <div class="boundary-rope"></div>
+                
+                <div class="pitch">
+                    <div class="crease-top"></div>
+                    <div class="crease-bottom"></div>
+                </div>
+
+                <!-- Fielders (Blue) -->
+                <div class="player team-field wk" data-role="Wicket Keeper"></div>
+                <div class="player team-field bowler" data-role="Bowler"></div>
+                <div class="player team-field slip" data-role="First Slip"></div>
+                <div class="player team-field point" data-role="Point"></div>
+                <div class="player team-field cover" data-role="Cover"></div>
+                <div class="player team-field midoff" data-role="Mid Off"></div>
+                <div class="player team-field midon" data-role="Mid On"></div>
+                <div class="player team-field midwicket" data-role="Mid Wicket"></div>
+                <div class="player team-field squareleg" data-role="Square Leg"></div>
+                <div class="player team-field thirdman" data-role="Third Man"></div>
+                <div class="player team-field fineleg" data-role="Fine Leg"></div>
+
+                <!-- Batsmen (Yellow) -->
+                <div class="player team-bat bat-strike" data-role="Batsman (Striker)"></div>
+                <div class="player team-bat bat-nonstrike" data-role="Batsman (Non-Striker)"></div>
+
+                <!-- Umpires (Black) -->
+                <div class="player umpire ump-main" data-role="Main Umpire"></div>
+                <div class="player umpire ump-square" data-role="Square Leg Umpire"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateGround() {
+            const r = parseFloat(document.getElementById('radius').value);
+            if (!r || r <= 0) return alert("Please enter a valid positive radius.");
+            
+            // Math calculations
+            const area = Math.PI * Math.pow(r, 2);
+            const perimeter = 2 * Math.PI * r;
+            
+            // Update UI
+            document.getElementById('areaRes').innerText = area.toFixed(2);
+            document.getElementById('periRes').innerText = perimeter.toFixed(2);
+            
+            // Visual flair: Pulse the stadium to show it updated
+            const stadium = document.getElementById('stadiumVisual');
+            stadium.style.transform = "scale(1.05)";
+            setTimeout(() => { stadium.style.transform = "scale(1)"; }, 300);
+        }
+    </script>
+</body>
+</html>

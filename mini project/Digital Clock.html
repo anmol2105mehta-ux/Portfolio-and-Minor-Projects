@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Digital Clock</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #050505; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .clock-container { background: #111; padding: 40px 60px; border-radius: 20px; box-shadow: 0 0 50px rgba(0, 255, 255, 0.1), inset 0 0 20px rgba(0, 255, 255, 0.05); border: 1px solid #222; }
+        .time { font-family: 'Orbitron', sans-serif; font-size: 80px; color: #0ff; text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff; letter-spacing: 5px; display: flex; align-items:baseline; }
+        .ampm { font-size: 30px; margin-left: 15px; color: #f0f; text-shadow: 0 0 10px #f0f, 0 0 20px #f0f; }
+    </style>
+</head>
+<body>
+    <div class="clock-container">
+        <div class="time"><span id="digits">00:00:00</span><span class="ampm" id="ampm">AM</span></div>
+    </div>
+    <script>
+        function tick() {
+            const now = new Date();
+            let h = now.getHours(), m = now.getMinutes(), s = now.getSeconds();
+            const ampm = h >= 12 ? 'PM' : 'AM';
+            h = h % 12 || 12; // 12hr format
+            
+            const p = n => n < 10 ? '0' + n : n;
+            document.getElementById('digits').innerText = `${p(h)}:${p(m)}:${p(s)}`;
+            document.getElementById('ampm').innerText = ampm;
+        }
+        setInterval(tick, 1000); tick();
+    </script>
+</body>
+</html>
